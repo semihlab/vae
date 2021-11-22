@@ -1,0 +1,2 @@
+# vae
+MNIST VAE comparision
