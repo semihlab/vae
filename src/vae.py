@@ -87,7 +87,14 @@ class VAE(nn.Module):
     
     def forward(self, x):
         mu, logvar = self.encode(x)
-        z = self.reparameterize(mu, logvar) # [BS x D]
+        z = self.reparameterize(mu, logvar)
         recon_batch = self.decode(z)
         
         return recon_batch, mu, logvar
+    
+    @torch.no_grad()
+    def reconstruct(self, x):
+        mu, logvar = self.encode(x)
+        z = self.reparameterize(mu, logvar)
+        recon_batch = self.decode(z)
+        return recon_batch
