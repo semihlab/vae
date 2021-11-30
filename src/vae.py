@@ -46,6 +46,7 @@ class VAE(nn.Module):
         enc_hidden_height = self.height
         enc_hidden_width = self.width
         for i in range(len(self.channels)-1):
+            # conv2d
             enc_hidden_height = int((enc_hidden_height + 2*self.padding - self.dilation * (self.kernel_size-1) - 1)/self.stride + 1)
             enc_hidden_width  = int((enc_hidden_width + 2*self.padding - self.dilation * (self.kernel_size-1) - 1)/self.stride + 1)
         hidden_size = self.channels[-1] * enc_hidden_height * enc_hidden_width
@@ -70,7 +71,6 @@ class VAE(nn.Module):
         )
         
 #         print(f'hidden: {hidden_height} x {hidden_width} = {hidden_size}')
-
         
     def encode(self, x):
         h = self.encoder(x)
