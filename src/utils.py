@@ -3,6 +3,8 @@ from torch import optim, nn
 from torch.nn import functional as F
 import torchvision
 
+import numpy as np
+
 import matplotlib.pyplot as plt
 
 from tqdm.auto import tqdm

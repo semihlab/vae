@@ -51,12 +51,12 @@ class VAE(nn.Module):
             enc_hidden_width  = int((enc_hidden_width + 2*self.padding - self.dilation * (self.kernel_size-1) - 1)/self.stride + 1)
         hidden_size = self.channels[-1] * enc_hidden_height * enc_hidden_width
         
-        # compute decoder hidden size
-        dec_hidden_height = enc_hidden_height
-        dec_hidden_width = enc_hidden_width
-        for i in range(len(self.channels)-1):
-            dec_hidden_height = int((dec_hidden_height-1) * self.stride - 2*self.padding + self.dilation*(self.kernel_size) + 1)
-            dec_hidden_width  = int((dec_hidden_width-1) * self.stride - 2*self.padding + self.dilation*(self.kernel_size) + 1)
+#         # compute decoder hidden size
+#         dec_hidden_height = enc_hidden_height
+#         dec_hidden_width = enc_hidden_width
+#         for i in range(len(self.channels)-1):
+#             dec_hidden_height = int((dec_hidden_height-1) * self.stride - 2*self.padding + self.dilation*(self.kernel_size) + 1)
+#             dec_hidden_width  = int((dec_hidden_width-1) * self.stride - 2*self.padding + self.dilation*(self.kernel_size) + 1)
         
         self.z_mu = nn.Linear(hidden_size, self.num_z)
         self.z_logvar = nn.Linear(hidden_size, self.num_z)
@@ -65,9 +65,9 @@ class VAE(nn.Module):
             nn.Linear(self.num_z, hidden_size),
             nn.Unflatten(1, (self.channels[-1], enc_hidden_height, enc_hidden_width)),
             *decoders,
-            nn.Flatten(),
-            nn.Linear(self.channels[0]*dec_hidden_height*dec_hidden_width, self.channels[0]*self.height*self.width),
-            nn.Unflatten(1, (self.channels[0], self.height, self.width))
+#             nn.Flatten(),
+#             nn.Linear(self.channels[0]*dec_hidden_height*dec_hidden_width, self.channels[0]*self.height*self.width),
+#             nn.Unflatten(1, (self.channels[0], self.height, self.width))
         )
         
 #         print(f'hidden: {hidden_height} x {hidden_width} = {hidden_size}')
