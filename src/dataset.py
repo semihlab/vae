@@ -25,8 +25,8 @@ class CustomDataset(object):
 
     def __get_dataset(self, dataset_name, root="dataset"):
         def get_coco_dataset(root, transforms):
-            def download(url):
-                name = url.split('/')[-1]
+            def download(url, root):
+                name = os.path.join(root, url.split('/')[-1])
                 print(f'Downloading file from {url} to {name}')
                 
                 with open(name, 'wb') as f:
@@ -41,23 +41,19 @@ class CustomDataset(object):
                 return name
 
             train_dir = os.path.join(root, "test")
-            train_archive = os.path.join(train_dir, "test2017.zip")
-            if not os.path.isfile(train_archive):
-                if not os.path.isdir(train_dir):
-                    os.makedirs(train_dir)
+            if not os.path.isdir(train_dir):
+                os.makedirs(train_dir)
                 # download
-                download('http://images.cocodataset.org/zips/test2017.zip')
+                train_archive = download('http://images.cocodataset.org/zips/test2017.zip', train_dir)
                 # unzip
                 with zipfile.ZipFile(train_archive, 'r') as f:
                     f.extractall(train_dir)
 
             test_dir = os.path.join(root, "val")
-            test_archive = os.path.join(test_dir, "val2017.zip")
-            if not os.path.isfile(test_archive):
-                if not os.path.isdir(test_dir):
-                    os.makedirs(test_dir)
+            if not os.path.isdir(test_dir):
+                os.makedirs(test_dir)
                 # download
-                download('http://images.cocodataset.org/zips/val2017.zip')
+                test_archive = download('http://images.cocodataset.org/zips/val2017.zip', test_dir)
                 # unzip
                 with zipfile.ZipFile(test_archive, 'r') as f:
                     f.extractall(test_dir)

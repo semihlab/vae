@@ -1,2 +1,6 @@
 # vae
-MNIST VAE comparision
+COCO VAE comparision
+
+CNN-based
+VAE
+IWAE
